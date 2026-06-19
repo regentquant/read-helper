@@ -61,6 +61,7 @@ async function loadBook(index) {
   el.bookMeta.textContent = book.author || '';
   try {
     const res = await fetch('books/' + encodeURIComponent(book.file));
+    if (!res.ok) return showLoadError();
     state.text = await res.text();
   } catch (err) {
     return showLoadError();
@@ -96,7 +97,10 @@ function locate(text, start, end) {
   if (startCount > 1) return { status: 'ambiguous', count: startCount };
 
   const startIdx = text.indexOf(start);
-  const endStart = text.indexOf(end, startIdx);
+  // Search for END only after START ends, so an END that sits inside START
+  // (e.g. a short END that is also a substring of START) is skipped. This also
+  // guarantees the passage fully contains START followed by END.
+  const endStart = text.indexOf(end, startIdx + start.length);
   if (endStart === -1) return { status: 'end-missing' };
 
   const endIdx = endStart + end.length;
