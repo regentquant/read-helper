@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>读书助手</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>读书助手</h1>
+        <p>定位段落，一键生成提示词</p>
+      </div>
+      <label class="picker">
+        <span>书籍</span>
+        <select id="book-picker"></select>
+        <em id="book-meta"></em>
+      </label>
+    </header>
+
+    <section class="inputs">
+      <label class="field">
+        <span>起始文字</span>
+        <input id="start-input" type="text" placeholder="输入这段话开头的几个字"
+               autocomplete="off" spellcheck="false" />
+      </label>
+      <label class="field">
+        <span>结束文字</span>
+        <input id="end-input" type="text" placeholder="输入这段话结尾的几个字"
+               autocomplete="off" spellcheck="false" />
+      </label>
+    </section>
+
+    <section class="card passage-card">
+      <div class="card-label">定位结果</div>
+      <div id="passage"><p class="hint">输入起始与结束文字，定位你要的段落。</p></div>
+    </section>
+
+    <section class="card prompt-card">
+      <div class="card-label">提示词</div>
+      <div id="prompts" class="segmented"></div>
+      <pre id="preview" class="preview muted">提示词将在定位成功后显示。</pre>
+      <div class="actions">
+        <button id="copy-prompt" class="btn primary" disabled>复制提示词</button>
+        <button id="copy-text" class="btn ghost" disabled>复制原文</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
